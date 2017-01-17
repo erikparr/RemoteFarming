@@ -9,7 +9,7 @@ void setup()
    pinMode(led1, OUTPUT);
    pinMode(led2, OUTPUT);
 
-   Particle.function("led",ledToggle);   
+   Particle.function("led",ledToggle);
      Particle.variable("ledState", &stateLed, INT);
 
 digitalWrite(led1, LOW);
@@ -17,14 +17,9 @@ digitalWrite(led1, LOW);
 
 }
 
-
-
 void loop()
 {
 }
-
-
-
 
 
 int ledToggle(String command) {
@@ -39,12 +34,10 @@ int ledToggle(String command) {
         digitalWrite(led1,LOW);
         digitalWrite(led2,LOW);
         stateLed = LOW;
-        
+
         return 0;
     }
     else {
         return -1;
     }
 }
-
-

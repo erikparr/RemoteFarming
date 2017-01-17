@@ -53,12 +53,12 @@ function toggleValue(obj) {
         document.getElementById("ledPower").innerHTML = "led is now ON";
 
     }
-    sparkSetLed(newValue);
+    particleSetLed(newValue);
 }
 
-function sparkSetLed(newValue) {
+function particleSetLed(newValue) {
     var setFunc = "led"
-    var requestURL = "https://api.spark.io/v1/devices/" + deviceID + "/" + setFunc + "/";
+    var requestURL = "https://api.particle.io/v1/devices/" + deviceID + "/" + setFunc + "/";
     $.post(requestURL, {
         params: newValue,
         access_token: accessToken
