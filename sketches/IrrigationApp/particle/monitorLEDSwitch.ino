@@ -1,20 +1,13 @@
-
-
 // This #include statement was automatically added by the Particle IDE.
 #include "TimeAlarms/TimeAlarms.h"
 
-// for time sync and time management
+// for time sync once a day
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
-#define ONE_HOUR_MILLIS (10 * 60 * 1000) // changed to 10 minutes!!
 unsigned long lastSync = millis();
-unsigned long lastPublish = millis();
-bool bPublishData = false;
+
+AlarmID_t alarmT1;
 
 
-
-int photoresistor = A0; // This is where your photoresistor is plugged in. The other side goes to the "power" pin (below).
-int power = A5; // This is the other end of your photoresistor. The other side is plugged into the "photoresistor" pin (above).
-int analogvalue=0;
 
 int led1 = D0;
 int led2 = D7;
@@ -23,33 +16,27 @@ int t1StartHour = 12;
 int t1StartMin = 0;
 int t1EndHour = 12;
 int t1EndMin = 30;
-String timeStringT1="";
-
-AlarmID_t onAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn); ;
-AlarmID_t offAlarmT1 = Alarm.alarmOnce(t1EndHour,t1EndMin,0, timedPowerOff); ;
-
-;
-
 
 void setup()
 {
 
-    pinMode(photoresistor,INPUT);
-    pinMode(power,OUTPUT); // The pin powering the photoresistor is output (sending out consistent power)
-    digitalWrite(power,HIGH);
-    Particle.variable("analogvalue", &analogvalue, INT);
-
-    
    pinMode(led1, OUTPUT);
    pinMode(led2, OUTPUT);
 
    Particle.function("led",ledToggle);
       Particle.function("setAlarm", resetAlarmTime);
-        //   Particle.function("getTimeStringT1", timeStringT1);
+
+    //   Particle.function("setStrtHr1",setStartHrT1);
+    //   Particle.function("setStrtMin1",setStartMinT1);
+    //   Particle.function("setEndHr1",setEndHourT1);
+    //   Particle.function("setEndMin1",setEndMinT1);
+
 
      Particle.variable("ledState", &stateLed, INT);
-
-     Particle.variable("getTimeStrT1", &timeStringT1, STRING);
+     Particle.variable("StartHourT1", &t1StartHour, INT);
+     Particle.variable("StartMinT1", &t1StartMin, INT);
+     Particle.variable("EndHourT1", &t1EndHour, INT);
+     Particle.variable("EndMinT1", &t1EndMin, INT);
 
 
 
@@ -60,10 +47,9 @@ void setup()
    //Berlin time zone
    Time.zone(1.0);
       // create the alarms 
-      //---------To do:-------------
-      //-----alarm should start at beginning based on webhooks schedule-----
-    //   onAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn); 
-    //   offAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn); 
+      alarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn); 
+
+
     //   Alarm.alarmRepeat(t1EndHour,t1EndMin,0, timedPowerOff); 
 
 
@@ -75,13 +61,8 @@ void loop()
 {
     // !Must have this for alarm to update!
     Alarm.delay(100);
-    manageTime();
-    analogvalue = analogRead(photoresistor);
-    if(bPublishData==true){
-        publishEvents();
-    }
-    delay(100);
-
+    syncTime();
+    
 //     if(Time.hour == t1StartHour && Time.minute == t1StartMin && stateLed==LOW){
 //         timedPowerOn();
 //     }
@@ -97,10 +78,7 @@ int resetAlarmTime(String timeString){
     //  t1StartMin = list[1].toInt();
     //  t1EndHour = list[2].toInt();
     //  t1EndMin = list[3].toInt();
-    Alarm.free(onAlarmT1);
-
-    Alarm.free(offAlarmT1);
-
+    Alarm.free(alarmT1);
     
     char charBuf[20];
     timeString.toCharArray(charBuf, 20);
@@ -122,15 +100,31 @@ int resetAlarmTime(String timeString){
     t1StartMin = values[1];
     t1EndHour = values[2];
     t1EndMin = values[3];
-    timeStringT1 = String(t1StartHour)+" "+String(t1StartMin)+" "+String(t1EndHour)+" "+String(t1EndMin);
     
-    onAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn); 
-    offAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOff); 
-
-    return 1;
+    alarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn); 
 
 }
 
+int setStartHrT1(String startHour){
+     t1StartHour = startHour.toInt();
+     
+     return t1StartHour;
+}
+
+int setStartMinT1(String startMin){
+     t1StartMin = startMin.toInt();
+     return t1StartMin;
+}
+
+int setEndHourT1(String endHour){
+     t1EndHour = endHour.toInt();
+     return t1EndHour;
+}
+
+int setEndMinT1(String endMin){
+     t1EndMin = endMin.toInt();
+     return t1EndMin;
+}
 
 
 void timedPowerOn(){
@@ -146,18 +140,7 @@ void timedPowerOff(){
 }
 
 
-void manageTime() {
-    //set publish boolean once an hour
-    if(millis() - lastPublish > ONE_HOUR_MILLIS){
-            bPublishData = true;
-        // if(bPublishData==true){
-        //     bPublishData = false;
-        // }else{
-        //     bPublishData = true;
-        // }
-            lastPublish = millis();
-    }
-    //sync time once a day
+void syncTime() {
   if (millis() - lastSync > ONE_DAY_MILLIS) {
     // Request time synchronization from the Particle Cloud
     Particle.syncTime();
@@ -165,14 +148,6 @@ void manageTime() {
   }
 }
 
-// once an hour we publish all our data to the cloud
-void publishEvents(){
-        Particle.publish("analogRead",String(analogvalue),PRIVATE);
-                bPublishData = false;
-}
-// String timeStringT1(){
-//     return String(t1StartHour)+String(t1StartMin)+String(t1EndHour)+String(t1EndMin);
-// }
 
 int ledToggle(String command) {
 
