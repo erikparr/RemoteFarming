@@ -1,7 +1,7 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
-var deviceID = "450039000e51353433323633";
-var accessToken = "0ad112ded9e5e2a67fd3c2e21ec43556deb8c3d4";
+var deviceID = "xx";
+var accessToken = "xx";
 //declare particle Variables
 var ledState = "ledState";
 var analogVal = "analogvalue";
@@ -75,26 +75,6 @@ function monitorSchedule() {
 
     });
 
-    //    //    requestURL = "https://api.particle.io/v1/devices/" + deviceID + "/" + "StartHourT1" + "/?access_token=" + accessToken;
-    //    requestURL = getRequestUrl("StartHourT1");
-    //    $.getJSON(requestURL, function (json) {
-    //        startHr = json.result;
-    //    });
-    //    //    requestURL = "https://api.particle.io/v1/devices/" + deviceID + "/" + "StartMinT1" + "/?access_token=" + accessToken;
-    //    requestURL = getRequestUrl("StartMinT1");
-    //    $.getJSON(requestURL, function (json) {
-    //        startMin = json.result;
-    //    });
-    //    //    requestURL = "https://api.particle.io /v1/devices/" + deviceID + "/" + "EndHourT1" + "/?access_token=" + accessToken;
-    //    requestURL = getRequestUrl("EndHourT1");
-    //    $.getJSON(requestURL, function (json) {
-    //        endHr = json.result;
-    //    });
-    //    //    requestURL = "https://api.particle.io/v1/devices/" + deviceID + "/" + "EndMinT1" + "/?access_token=" + accessToken;    
-    //    requestURL = getRequestUrl("EndMinT1");
-    //    $.getJSON(requestURL, function (json) {
-    //        endMin = json.result;
-    //    });    //wait a second for communication to take place
     setTimeout(updateSchedule, 10000);
 }
 

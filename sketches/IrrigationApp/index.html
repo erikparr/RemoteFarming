@@ -1,107 +1,128 @@
 <!DOCTYPE html>
 <html>
 
-<!--
 <head>
     <meta charset="UTF-8">
-    <title>title</title>
+    <title>Responsive Form With Flexbox Sample</title>
+    <link href='https://fonts.googleapis.com/css?family=Fira+Sans:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.css">
 </head>
--->
 
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
-    <!--    <h1>UPDATING LED SWITCH</h1>-->
+    <div class="form-container">
+        <form>
+            <h1> Orchard 1 </h1>
+            <div class="form-field multi-input">
+                <label for="first-name">Ad Hoc</label>
+                <select name="Duration" id="dur">
+                    <option selected disabled>Duration</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="30">30</option>
+                    <option value="60">1 Hour</option>
+                    <option value="120">2 Hours</option>
+                    <option value="180">3 Hours</option>
+                    <option value="240">4 Hours</option>
+                    <option value="300">5 Hours</option>
+                    <option value="360">6 Hours</option>
+                    <option value="420">7 Hours</option>
+                    <option value="480">8 Hours</option>
+                    <option value="540">9 Hours</option>
+                    <option value="600">10 Hours</option>
+                </select>
 
-    <div class="container">
-        <span id="ledPower"></span><br>
+            </div>
+
+            <div class="form-field multi-input">
+                <label for="LastCycle">Last Cycle</label>
+                <label for="LastDT">Date/Time: </label>
+                <label for="Vol">Volume: </label>
+                <label for="Flow">Flow Rate: </label>
+                <label for="VolTotal">Volume Total / Year: </label>
+            </div>
+
+
+            <div class="form-field multi-input">
+                <label for="CycleTime">Cycle</label>
+                <select name="hour" id="stHr1">
+                    <option selected disabled>Hour</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                </select>
+
+                <select name="minute" id="stMin1">
+                    <option selected disabled>Minute</option>
+                    <option value="0">0</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="35">35</option>
+                    <option value="40">40</option>
+                    <option value="45">45</option>
+                    <option value="50">50</option>
+                    <option value="55">55</option>
+                </select>
+
+                <select name="Duration" id="dur">
+                    <option selected disabled>Duration</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="30">30</option>
+                    <option value="60">1 Hour</option>
+                    <option value="120">2 Hours</option>
+                    <option value="180">3 Hours</option>
+                    <option value="240">4 Hours</option>
+                    <option value="300">5 Hours</option>
+                    <option value="360">6 Hours</option>
+                    <option value="420">7 Hours</option>
+                    <option value="480">8 Hours</option>
+                    <option value="540">9 Hours</option>
+                    <option value="600">10 Hours</option>
+                </select>
+                <select name="Frequency" id="freq">
+                    <option selected disabled>Frequency</option>
+                    <option value="480">8 Hours</option>
+                    <option value="720">12 Hours</option>
+                    <option value="1440">24 Hours</option>
+                    <option value="2880">2 Days</option>
+                    <option value="4320">3 Days</option>
+                    <option value="5760">4 Days</option>
+                    <option value="7200">5 Days</option>
+                    <option value="10080">7 Days</option>
+                </select>
+            </div>
+
+            <div class="form-field submit-field">
+                <button type="button">Submit</button>
+            </div>
+        </form>
     </div>
 
-    <div class="container style3 subcontainer">
-        <input type="checkbox" name="arg" id="switch1" onClick='toggleValue()'>
-        <label for="switch1"></label>
-    </div>
-
-    <div class="container">
-
-        <select name="hour" id="stHr1">
-    <option value="0">0</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-    <option value="10">10</option>
-    <option value="11">11</option>
-    <option value="12">12</option>
-    <option value="13">13</option>
-    <option value="14">14</option>
-    <option value="15">15</option>
-    <option value="16">16</option>
-    <option value="17">17</option>
-    <option value="18">18</option>
-    <option value="19">19</option>
-    <option value="20">20</option>
-    <option value="21">21</option>
-    <option value="22">22</option>
-    <option value="23">23</option>
-  </select>
-
-        <select name="minute" id="stMin1">
-    <option value="0">0</option>
-    <option value="5">5</option>
-    <option value="10">10</option>
-    <option value="15">15</option>
-    <option value="20">20</option>
-    <option value="25">25</option>
-     <option value="30">30</option>
-    <option value="35">35</option>
-    <option value="40">40</option>
-    <option value="45">45</option>
-    <option value="50">50</option>
-    <option value="55">55</option>
- </select>
-
-
-
-        <select name="Duration" id="dur">
-    <option value="5">5</option>
-    <option value="10">10</option>
-    <option value="30">30</option>
-    <option value="60">1 Hour</option>
-    <option value="120">2 Hours</option>
-    <option value="180">3 Hours</option>
-    <option value="240">4 Hours</option>
-    <option value="300">5 Hours</option>
-    <option value="360">6 Hours</option>
-    <option value="420">7 Hours</option>
-    <option value="480">8 Hours</option>
-    <option value="540">9 Hours</option>
-    <option value="600">10 Hours</option>
- </select>
-
-        <div class="container">
-            <span id="Schedule"></span><br>
-        </div>
-
-
-    </div>
-
-    <div class="container">
-        <input type="submit" id="submit" value="Upload to Particle" onclick='updateTime'>
-    </div>
-    <div class="container">
-        <input type="submit" id="getSchedule" value="Get Schedule" onclick='updateTime'>
-    </div>
-
-    <div class="container">
-        <input type="submit" id="updateSchedule" value="Update dat" onclick='updateTime'>
-    </div>
 
 </body>
 
