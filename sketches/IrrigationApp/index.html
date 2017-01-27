@@ -6,15 +6,26 @@
     <title>Responsive Form With Flexbox Sample</title>
     <link href='https://fonts.googleapis.com/css?family=Fira+Sans:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 </head>
 
 <body>
     <div class="form-container">
         <form>
             <h1> Orchard 1 </h1>
+
+            <div class="form-field multi-input">
+                <label>Status</label>
+                <span id="devName">Device:</span>
+                <span id="ledState">Power Status: </span>
+                <span id="startTime">Cycle Start:</span>
+                <span id="endTime">Cycle End:</span>
+            </div>
+
             <div class="form-field multi-input">
                 <label for="first-name">Ad Hoc</label>
-                <select name="Duration" id="dur">
+                <select name="Duration" id="adHocDur">
                     <option selected disabled>Duration</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
@@ -34,11 +45,16 @@
             </div>
 
             <div class="form-field multi-input">
-                <label for="LastCycle">Last Cycle</label>
-                <label for="LastDT">Date/Time: </label>
-                <label for="Vol">Volume: </label>
-                <label for="Flow">Flow Rate: </label>
-                <label for="VolTotal">Volume Total / Year: </label>
+                <label>Last Cycle</label>
+                <span id="lastStartTime">Start: </span>
+                <span id="lastEndTime">End: </span>
+                <span id="lastFreq">Frequency: </span>
+            </div>
+
+            <div class="form-field multi-input">
+                <span id="Vol">Volume: </span>
+                <span id="Flow">Flow Rate: </span>
+                <span id="VolTotal">Vol. Total / Year: </span>
             </div>
 
 
@@ -118,7 +134,7 @@
             </div>
 
             <div class="form-field submit-field">
-                <button type="button">Submit</button>
+                <button type="button" id="submit">Upload to Particle</button>
             </div>
         </form>
     </div>
