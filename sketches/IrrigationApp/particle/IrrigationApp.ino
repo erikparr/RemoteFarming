@@ -5,16 +5,21 @@
 
 // for time sync and time management
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
-#define ONE_HOUR_MILLIS (10 * 60 * 1000) // changed to 10 minutes!!
+#define ONE_HOUR_MILLIS (60 * 60 * 1000)
 unsigned long lastSync = millis();
 unsigned long lastPublish = millis();
 bool bPublishData = false;
 
 
-
 int photoresistor = A0; // This is where your photoresistor is plugged in. The other side goes to the "power" pin (below).
 int power = A5; // This is the other end of your photoresistor. The other side is plugged into the "photoresistor" pin (above).
 int analogvalue=0;
+
+//set these values from thingspeak
+int todayVol=0;
+int lastDayVol=0;
+int secondDayVol=0;
+int thirdDayVol=0;
 
 int led1 = D0;
 int led2 = D7;
@@ -25,10 +30,8 @@ int t1EndHour = 12;
 int t1EndMin = 30;
 String timeStringT1="";
 
-AlarmID_t onAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn); ;
-AlarmID_t offAlarmT1 = Alarm.alarmOnce(t1EndHour,t1EndMin,0, timedPowerOff); ;
-
-;
+AlarmID_t onAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn);
+AlarmID_t offAlarmT1 = Alarm.alarmOnce(t1EndHour,t1EndMin,0, timedPowerOff);
 
 
 void setup()
@@ -39,18 +42,22 @@ void setup()
     digitalWrite(power,HIGH);
     Particle.variable("analogvalue", &analogvalue, INT);
 
+    
+    Alarm.alarmRepeat(3,00,0, publishEvents);  //  at 3AM every day
 
-   pinMode(led1, OUTPUT);
+   
+    pinMode(led1, OUTPUT);
    pinMode(led2, OUTPUT);
 
    Particle.function("led",ledToggle);
       Particle.function("setAlarm", resetAlarmTime);
         //   Particle.function("getTimeStringT1", timeStringT1);
-
      Particle.variable("ledState", &stateLed, INT);
-
      Particle.variable("getTimeStrT1", &timeStringT1, STRING);
+    timeStringT1 = String(t1StartHour)+" "+String(t1StartMin)+" "+String(t1EndHour)+" "+String(t1EndMin);
 
+//p1data_request
+Particle.subscribe("hook-response/getLast", getLastHandler, MY_DEVICES);
 
 
     digitalWrite(led1, LOW);
@@ -59,14 +66,6 @@ void setup()
    //*** SCHEDULING ***
    //Berlin time zone
    Time.zone(1.0);
-      // create the alarms
-      //---------To do:-------------
-      //-----alarm should start at beginning based on webhooks schedule-----
-    //   onAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn);
-    //   offAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn);
-    //   Alarm.alarmRepeat(t1EndHour,t1EndMin,0, timedPowerOff);
-
-
 }
 
 
@@ -80,7 +79,7 @@ void loop()
     if(bPublishData==true){
         publishEvents();
     }
-    delay(1000);
+    delay(100);
 
 //     if(Time.hour == t1StartHour && Time.minute == t1StartMin && stateLed==LOW){
 //         timedPowerOn();
@@ -97,10 +96,12 @@ int resetAlarmTime(String timeString){
     //  t1StartMin = list[1].toInt();
     //  t1EndHour = list[2].toInt();
     //  t1EndMin = list[3].toInt();
+
+    //first, publish last cycle to cloud
+    Particle.publish("lastCycle",String(t1StartHour)+" "+String(t1StartMin)+" "+String(t1EndHour)+" "+String(t1EndMin),PRIVATE); //Volume
+
     Alarm.free(onAlarmT1);
-
     Alarm.free(offAlarmT1);
-
 
     char charBuf[20];
     timeString.toCharArray(charBuf, 20);
@@ -126,12 +127,8 @@ int resetAlarmTime(String timeString){
 
     onAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOn);
     offAlarmT1 = Alarm.alarmOnce(t1StartHour,t1StartMin,0, timedPowerOff);
-
     return 1;
-
 }
-
-
 
 void timedPowerOn(){
     stateLed = HIGH;
@@ -150,11 +147,6 @@ void manageTime() {
     //set publish boolean once an hour
     if(millis() - lastPublish > ONE_HOUR_MILLIS){
             bPublishData = true;
-        // if(bPublishData==true){
-        //     bPublishData = false;
-        // }else{
-        //     bPublishData = true;
-        // }
             lastPublish = millis();
     }
     //sync time once a day
@@ -167,12 +159,24 @@ void manageTime() {
 
 // once an hour we publish all our data to the cloud
 void publishEvents(){
+
+    //DEVICE: Irrigation-Particle1
+    //IRRIGATION SYSTEM 1
         Particle.publish("analogRead",String(analogvalue),PRIVATE);
+        Particle.publish("d1s1Vol",String(0.0),PRIVATE); //Volume
+        Particle.publish("lastCycle",String(t1StartHour)+" "+String(t1StartMin)+" "+String(t1EndHour)+" "+String(t1EndMin)+" "+String(1)+" "+" "+String(2)+" "+" "+String(3),PRIVATE); //Volume
+
+        // Particle.publish("d1s1Flow",String(0.0),PRIVATE); //Flow
+        // Particle.publish("d1s1FlowAnm",String(0.0),PRIVATE); //Flow Anomaly
+        // Particle.publish("d1s1VolTtl",String(0.0),PRIVATE); //Flow Vol Total
+        // Particle.publish("d1s1Temp",String(0.0),PRIVATE); //Temp
+        // Particle.publish("d1s1Hum",String(0.0),PRIVATE); //Hum
+        // Particle.publish("d1s1Volt",String(0.0),PRIVATE); //Voltage
+
                 bPublishData = false;
 }
-// String timeStringT1(){
-//     return String(t1StartHour)+String(t1StartMin)+String(t1EndHour)+String(t1EndMin);
-// }
+
+//
 
 int ledToggle(String command) {
 
@@ -192,3 +196,34 @@ int ledToggle(String command) {
         return -1;
     }
 }
+
+void publishDataLog(){
+  Particle.publish("getLast", "data", PRIVATE);
+  /*Particle.publish("lastCycle",String(t1StartHour)+" "+String(t1StartMin)+" "+String(t1EndHour)+" "+String(t1EndMin),PRIVATE); //Volume*/
+
+}
+
+
+  void getLastHandler(const char *event, const char *data) {
+
+
+  //Begin black magic supplied by @mdma at:
+  // https://community.spark.io/t/gpio-control-via-gui/6310/7
+  const int value_count = 8;  // the maximum number of values
+  int values[value_count];    // store the values here
+
+  char string[20];
+  strcpy(string, data);  // the string to split
+  int idx = 0;
+  for (char* pt=strtok(string, " "); pt && idx<value_count; pt=strtok(NULL, " ")) {
+     values[idx++] = atoi(pt);
+  }
+  //End black magic.
+  lastDayVol=values[4];
+  secondDayVol=values[5];
+  thirdDayVol=values[6];
+
+
+
+}
+
