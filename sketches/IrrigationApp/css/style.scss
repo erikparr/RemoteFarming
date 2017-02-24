@@ -1,226 +1,139 @@
-    $break-small: 600px;
-    $break-large: 1200px;
-    * {
-        box-sizing: border-box;
+$break-small: 600px;
+$break-large: 1200px;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
+    background: #CCC;
+    color: #fff;
+    padding: 0;
+}
+
+.form-container {
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    width: 100%;
+    max-width: 1000px;
+    min-width: 300px;
+    padding: 2em;
+    background: #5abc9b;
+    border-radius: 0.25em;
+    box-shadow: 0 0 2em rgba(0, 0, 0, 0.2);
+}
+
+input,
+select,
+textarea {
+    padding: 0.5em;
+    color: #333;
+    font-size: 0.875em;
+    font-family: inherit;
+    background: #f4f4f4;
+    border: 1px solid #CCC;
+    border-width: 1px 1px 1px 0;
+    border-radius: 0;
+    appearance: textfield;
+    transition: 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    background: #FFF;
+    box-shadow: inset 0.1em 0.1em 0.25em rga(0, 0, 0, 0.2);
+    outline: 0;
+}
+
+.form-field {
+    display: -webkit-flex;
+    margin-bottom: 1em;
+    label {
+        -webkit-flex: 0 1 22em;
+        padding: 1em;
+        background: #FFF;
+        border: 1px solid #5abc9b;
+        color: #2d2d2d;
+        font-weight: 400;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        font-size: 0.75em;
+        text-align: center;
+        lint-height: 1;
     }
-    
-    body {
-        font: normal 18px/1.5 "Fira Sans", "Helvetica Neue", sans-serif;
+    span {
+        -webkit-flex: 0 1 42em;
+        padding: 1em;
         background: #CCC;
-        color: #fff;
-        padding: 0;
+        border: 1px solid #5abc9b;
+        color: #2d2d2d;
+        font-weight: 400;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        font-size: 0.65em;
+        text-align: center;
+        lint-height: 1;
     }
-    
-    .form-container {
-        display: -webkit-flex;
-        justify-content: center;
-        align-items: center;
+    button {
+        -webkit-flex: 0 1 40%;
+        margin-top: 10px;
+        padding: 0.7em;
+        @media screen and (max-width: $break-small) {
+            -webkit-flex: 0 1 100%;
+        }
+        color: 2d2d2d;
+        font-size: 0.75rem;
+        font-family: inherit;
+        text-transform: uppercase;
+        letter-spacing: .09em;
+        background:darkgray;
+        border: 0;
+        cursor: pointer;
     }
-    
-    form {
-        width: 100%;
-        max-width: 1000px;
-        min-width: 300px;
-        padding: 2em;
-        background: #e6e6e6;
-        border-radius: 0.25em;
-        box-shadow: 0 0 2em rgba(0, 0, 0, 0.2);
-    }
-    
     input,
     select,
     textarea {
-        padding: 0.5em;
-        color: #333;
-        font-size: 0.875em;
-        font-family: inherit;
-        background: #f4f4f4;
-        border: 1px solid #CCC;
-        border-width: 1px 1px 1px 0;
-        border-radius: 0;
-        appearance: textfield;
-        transition: 0.3s;
+        -webkit-flex: 1;
     }
-    
-    input:focus,
-    select:focus,
-    textarea:focus {
-        background: #FFF;
-        box-shadow: inset 0.1em 0.1em 0.25em rga(0, 0, 0, 0.2);
-        outline: 0;
-    }
-    
-    .align-right {
-        float: right;
-        margin-right: 15px;
-    }
-    
-    .align-left {
-        float: left;
-    }
-    
-    .status-bar {
-        display: -webkit-flex;
-        flex-direction: row;
-        margin-bottom: 0.5em;
+    @media screen and (max-width: $break-small) {
+        -webkit-flex-wrap: wrap;
         label {
-            -webkit-flex: 0 1 22em;
-        }
-        @media screen and (max-width: $break-small) {
-            -webkit-flex-wrap: wrap;
-            label {
-                -webkit-flex: 1;
-                -webkit-flex-direction: column;
-            }
-            input,
-            select,
-            textarea {
-                -webkit-flex: 1 1 100%;
-                padding: 1em;
-            }
-        }
-    }
-    
-    .form-field {
-        display: -webkit-flex;
-        flex-direction: row;
-        margin-bottom: 0.5em;
-        label {
-            -webkit-flex: 0 1 1200em;
-            padding: 1em;
-            background: #FFF;
-            border: 1px solid #e6e6e6;
-            color: #2d2d2d;
-            font-weight: 400;
-            letter-spacing: .09em;
-            text-transform: uppercase;
-            font-size: 0.75em;
-            text-align: center;
-            lint-height: 1;
-        }
-        span {
-            -webkit-flex: 0 1 42em;
-            padding: 1em;
-            background: #CCC;
-            border: 1px solid #e6e6e6;
-            color: #2d2d2d;
-            font-weight: 400;
-            letter-spacing: .09em;
-            text-transform: uppercase;
-            font-size: 0.65em;
-            text-align: center;
-            lint-height: 1;
-        }
-        button {
-            -webkit-flex: 0 1 40%;
-            margin-top: 10px;
-            padding: 0.7em;
-            @media screen and (max-width: $break-small) {
-                -webkit-flex: 0 1 100%;
-            }
-            color: 2d2d2d;
-            font-size: 0.75rem;
-            font-family: inherit;
-            text-transform: uppercase;
-            letter-spacing: .09em;
-            background:darkgray;
-            border: 0;
-            cursor: pointer;
+            -webkit-flex: 1;
+            -webkit-flex-direction: column;
         }
         input,
         select,
         textarea {
-            -webkit-flex: 1;
+            -webkit-flex: 1 1 100%;
+            padding: 1em;
         }
+    }
+}
+
+.submit-field {
+    -webkit-flex-direction: row-reverse;
+    button {
+        -webkit-flex: 0 1 40%;
+        margin-top: 10px;
+        padding: 0.7em;
         @media screen and (max-width: $break-small) {
-            -webkit-flex-wrap: wrap;
-            label {
-                -webkit-flex: 1;
-                -webkit-flex-direction: column;
-            }
-            input,
-            select,
-            textarea {
-                -webkit-flex: 1 1 100%;
-                padding: 1em;
-            }
+            -webkit-flex: 0 1 100%;
         }
+        color: #f2f2f2;
+        font-size: 1rem;
+        font-family: inherit;
+        text-transform: uppercase;
+        letter-spacing: .09em;
+        text-shadow: 0 1px 0 #FFF;
+        background: #2c8a6a;
+        border-radius: 0.25em;
+        border: 0;
+        transition: 0.3s;
+        cursor: pointer;
     }
-    
-    .form-field1 {
-        display: -webkit-flex;
-        flex-direction: row;
-        margin-bottom: 0.5em;
-        .sub-container {
-            display: -webkit-flex;
-            -webkit-flex: 0 1 300em;
-            flex-direction: column;
-            label {
-                padding: 1em;
-                background: #FFF;
-                border: 1px solid #e6e6e6;
-                color: #2d2d2d;
-                font-weight: 400;
-                letter-spacing: .09em;
-                text-transform: uppercase;
-                font-size: 0.75em;
-                text-align: center;
-                lint-height: 1;
-            }
-            span {
-                padding: 1em;
-                background: #CCC;
-                border: 1px solid #e6e6e6;
-                color: #2d2d2d;
-                font-weight: 400;
-                letter-spacing: .09em;
-                text-transform: uppercase;
-                font-size: 0.65em;
-                text-align: center;
-                lint-height: 1;
-            }
-            button {
-                -webkit-flex: 0 1 40%;
-                margin-top: 10px;
-                padding: 0.7em;
-                @media screen and (max-width: $break-small) {
-                    -webkit-flex: 0 1 100%;
-                }
-                color: 2d2d2d;
-                font-size: 0.75rem;
-                font-family: inherit;
-                text-transform: uppercase;
-                letter-spacing: .09em;
-                background:darkgray;
-                border: 0;
-                cursor: pointer;
-            }
-        }
-        @media screen and (max-width: $break-small) {
-            -webkit-flex-wrap: wrap;
-            min-width: 25%;
-        }
-    }
-    
-    .submit-field {
-        -webkit-flex-direction: row-reverse;
-        button {
-            -webkit-flex: 0 1 40%;
-            margin-top: 10px;
-            padding: 0.7em;
-            @media screen and (max-width: $break-small) {
-                -webkit-flex: 0 1 100%;
-            }
-            color: #f2f2f2;
-            font-size: 1rem;
-            font-family: inherit;
-            text-transform: uppercase;
-            letter-spacing: .09em;
-            text-shadow: 0 1px 0 #FFF;
-            background: #2c8a6a;
-            border-radius: 0.25em;
-            border: 0;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-    }
+}

@@ -12,66 +12,108 @@
 </head>
 
 <body>
-
     <div class="form-container">
         <form>
-            <div id="form1">
+            <div class="sub-container" id="form1">
+                <h1> Orchard 1</h1>
                 <div class="form-field">
-                    <label>
-                    <p class="align-left" id>Orchard 1</p>
-                        
-                    <p class="align-right" id="battery">Battery: </p>
-                        
-                    <p class="align-right" id="runState">Status: </p>
-                    </label>
+                    <label>Device Status</label>
+                    <span id="devName">Device:</span>
+                    <span id="runState">Cycle Running: </span>
+                    <span id="connected">Connected:</span>
+                </div>
+                <div class="form-field">
+                    <label>Cycle Status</label>
+                    <span id="startTime">Cycle Start:</span>
+                    <span id="endTime">Cycle End:</span>
+                    <span id="freqTime">Frequency:</span>
+                </div>
+
+                <div class="form-field">
+                    <label for="first-name">Ad Hoc</label>
+                    <select name="Duration" id="adHocDur">
+                    <option selected disabled>Duration</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="30">30</option>
+                    <option value="60">1 Hour</option>
+                    <option value="120">2 Hours</option>
+                    <option value="180">3 Hours</option>
+                    <option value="240">4 Hours</option>
+                    <option value="300">5 Hours</option>
+                    <option value="360">6 Hours</option>
+                    <option value="420">7 Hours</option>
+                    <option value="480">8 Hours</option>
+                    <option value="540">9 Hours</option>
+                    <option value="600">10 Hours</option>
+                </select>
+                    <span id="adhocCount">Time Remaining: </span>
+
+                    <!--Note that button value must be specific to each form-->
+                    <span><button type="button" id="adhocTime1" value=0>Update Adhoc</span>
+
+                </div>
+
+                <div class="form-field">
+                    <label>Last Cycle</label>
+                    <span id="lastStartTime">Start: </span>
+                    <span id="lastEndTime">End: </span>
+                </div>
+
+                <div class="form-field">
+                    <span id="Vol">Volume: </span>
+                    <span id="Flow">Flow Rate: </span>
+                    <span id="VolTotal">Vol. Total / Year: </span>
                 </div>
 
 
-                <div class="form-field1">
-
-                    <div class="sub-container">
-                        <label>
-                            <div class="align-left" id="lastStartTime">Last Cycle</div></label>
-                        <span>
-                        <p id="Vol">Volume:</p>
-                        <p id="Flow">Flow Rate:</p>
-                        <p id="VolTotal">Total Year:</p></span></div>
-
-                    <div class="sub-container">
-                        <label>                            <div class="align-left" id="lastStartTime">Program</div></label>
-                        <span>
-                            
-                    <p id="startTime">Start Time: 
-                        <select name="hour" id="stHr">
+                <div class="form-field">
+                    <label for="CycleTime">Cycle</label>
+                    <select name="hour" id="stHr">
                     <option selected disabled>Hour</option>
-                    <option value="0">0:00</option>
-                    <option value="1">1:00</option>
-                    <option value="2">2:00</option>
-                    <option value="3">3:00</option>
-                    <option value="4">4:00</option>
-                    <option value="5">5:00</option>
-                    <option value="6">6:00</option>
-                    <option value="7">7:00</option>
-                    <option value="8">8:00</option>
-                    <option value="9">9:00</option>
-                    <option value="10">10:00</option>
-                    <option value="11">11:00</option>
-                    <option value="12">12:00</option>
-                    <option value="13">13:00</option>
-                    <option value="14">14:00</option>
-                    <option value="15">15:00</option>
-                    <option value="16">16:00</option>
-                    <option value="17">17:00</option>
-                    <option value="18">18:00</option>
-                    <option value="19">19:00</option>
-                    <option value="20">20:00</option>
-                    <option value="21">21:00</option>
-                    <option value="22">22:00</option>
-                    <option value="23">23:00</option>
-                </select></p>
-                            
-                    <p id="endTime">Duration:
-                        <select name="Duration" id="dur">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                </select>
+
+                    <select name="minute" id="stMin">
+                    <option selected disabled>Minute</option>
+                    <option value="0">0</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="35">35</option>
+                    <option value="40">40</option>
+                    <option value="45">45</option>
+                    <option value="50">50</option>
+                    <option value="55">55</option>
+                </select>
+
+                    <select name="Duration" id="dur">
                     <option selected disabled>Duration</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
@@ -86,46 +128,27 @@
                     <option value="480">8 Hours</option>
                     <option value="540">9 Hours</option>
                     <option value="600">10 Hours</option>
-                </select></p>
-                            
-                    <p id="freqTime">Frequency:
-                    <select name="Frequency" id="freq">
-                    <option selected disabled value="0">Frequency</option>
-                        <option value="8">8 Hours</option>
-                        <option value="12">12 Hours</option>
-                        <option value="24">24 Hours</option>
-                        <option value="48">2 Days</option>
-                        <option value="72">3 Days</option><option value="96">4 Days</option><option value="120">5 Days</option><option value="10080">7 Days</option> 
-                        </select></p>
-                        <span><button type="button" id="cycleTime1" value=0>Update Cycle Settings</span>
-
-                        </span>
-                    </div>
-
-                    <div class="sub-container">
-                        <label>Ad Hoc</label>
-                        <span>
-                            <p> Duration: 
-
-                    <span><select name="Duration" id="adHocDur">
-                    <option selected disabled>Duration</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="30">30</option>
-                    <option value="60">1 Hour</option>
-                    <option value="120">2 Hours</option>
-                    <option value="180">3 Hours</option>
-                    <option value="240">4 Hours</option>
-                    <option value="300">5 Hours</option>
-                    <option value="360">6 Hours</option>
-                    <option value="420">7 Hours</option>
+                </select>
+                    <select name="Frequency" id="freq" value=0>
+                    <option selected disabled>Frequency</option>
+                    <option value="0">Do Once</option>
                     <option value="480">8 Hours</option>
-                    <option value="540">9 Hours</option>
-                    <option value="600">10 Hours</option>
-                    </select></p>
-                            </span></div>
+                    <option value="720">12 Hours</option>
+                    <option value="1440">24 Hours</option>
+                    <option value="2880">2 Days</option>
+                    <option value="4320">3 Days</option>
+                    <option value="5760">4 Days</option>
+                    <option value="7200">5 Days</option>
+                    <option value="10080">7 Days</option>
+                </select>
+                    <!--Note that button value must be specific to each form-->
+                    <span><button type="button" id="cycleTime1" value=0>Update Cycle Settings</span>
                 </div>
 
+                <!--
+<div class="form-field submit-field">
+    <button type="button" id="submit">Upload to Particle</button>
+</div>-->
             </div>
 
         </form>
@@ -134,6 +157,146 @@
     </div>
     <br></br>
 
+    <div class="form-container">
+        <form>
+            <div class="sub-container" id="form2">
+                <h1> Orchard 2</h1>
+                <div class="form-field">
+                    <label>Device Status</label>
+                    <span id="devName">Device:</span>
+                    <span id="runState">Cycle Running: </span>
+                    <span id="connected">Connected:</span>
+                </div>
+                <div class="form-field">
+                    <label>Cycle Status</label>
+                    <span id="startTime">Cycle Start:</span>
+                    <span id="endTime">Cycle End:</span>
+                    <span id="freqTime">Frequency:</span>
+                </div>
+
+                <div class="form-field">
+                    <label for="first-name">Ad Hoc</label>
+                    <select name="Duration" id="adHocDur">
+                    <option selected disabled>Duration</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="30">30</option>
+                    <option value="60">1 Hour</option>
+                    <option value="120">2 Hours</option>
+                    <option value="180">3 Hours</option>
+                    <option value="240">4 Hours</option>
+                    <option value="300">5 Hours</option>
+                    <option value="360">6 Hours</option>
+                    <option value="420">7 Hours</option>
+                    <option value="480">8 Hours</option>
+                    <option value="540">9 Hours</option>
+                    <option value="600">10 Hours</option>
+                </select>
+                    <span id="adhocCount">Time Remaining: </span>
+                    <!--Note that button value must be specific to each form-->
+                    <span><button type="button" id="adhocTime2" value=1>Update Adhoc</span>
+
+                </div>
+
+                <div class="form-field">
+                    <label>Last Cycle</label>
+                    <span id="lastStartTime">Start: </span>
+                    <span id="lastEndTime">End: </span>
+                </div>
+
+                <div class="form-field">
+                    <span id="Vol">Volume: </span>
+                    <span id="Flow">Flow Rate: </span>
+                    <span id="VolTotal">Vol. Total / Year: </span>
+                </div>
+
+
+                <div class="form-field">
+                    <label for="CycleTime">Cycle</label>
+                    <select name="hour" id="stHr">
+                    <option selected disabled>Hour</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                </select>
+
+                    <select name="minute" id="stMin">
+                    <option selected disabled>Minute</option>
+                    <option value="0">0</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="35">35</option>
+                    <option value="40">40</option>
+                    <option value="45">45</option>
+                    <option value="50">50</option>
+                    <option value="55">55</option>
+                </select>
+
+                    <select name="Duration" id="dur">
+                    <option selected disabled>Duration</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="30">30</option>
+                    <option value="60">1 Hour</option>
+                    <option value="120">2 Hours</option>
+                    <option value="180">3 Hours</option>
+                    <option value="240">4 Hours</option>
+                    <option value="300">5 Hours</option>
+                    <option value="360">6 Hours</option>
+                    <option value="420">7 Hours</option>
+                    <option value="480">8 Hours</option>
+                    <option value="540">9 Hours</option>
+                    <option value="600">10 Hours</option>
+                </select>
+                    <select name="Frequency" id="freq">
+                    <option selected disabled>Frequency</option>
+                    <option value="8">8 Hours</option>
+                    <option value="12">12 Hours</option>
+<!--
+<option value="24">24 Hours</option>
+<option value="48">2 Days</option>
+<option value="72">3 Days</option>
+<option value="96">4 Days</option>
+<option value="120">5 Days</option>
+<option value="10080">7 Days</option>-->
+                </select>
+                    <!--Note that button value must be specific to each form-->
+                    <span><button type="button" id="cycleTime2" value=1>Update Cycle Settings</span>
+                </div>
+
+                <!--
+<div class="form-field submit-field">
+    <button type="button" id="submit">Upload to Particle</button>
+</div>-->
+            </div>
+
+        </form>
+    </div>
 
 
 </body>

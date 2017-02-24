@@ -1,7 +1,7 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
-var deviceID = "450039000e51353433323633";
-var accessToken = "0ad112ded9e5e2a67fd3c2e21ec43556deb8c3d4";
+var deviceID = "xxx";
+var accessToken = "xxx";
 
 var urlLastCycleData = 'https://api.thingspeak.com/channels/218438/fields/7/last.txt';
 
@@ -12,24 +12,22 @@ var runningStatus = [-1, -1]; // DigitalOut power status
 $(document).ready(function () {
 
     updateParticleStatus(0);
-    //    updateParticleStatus(1);
+    updateParticleStatus(1);
     updateCycleTime(0);
-    //    updateCycleTime(1);
+    updateCycleTime(1);
     updateAdhocTimer(0);
-    //    updateAdhocTimer(1);
+    updateAdhocTimer(1);
 
     $('#cycleTime1, #cycleTime2').click(function () {
         var formIndex = parseInt($(this).val());
         var index = formIndex;
         console.log("ok " + formIndex);
         var stHr = parseInt(document.forms[formIndex].elements['stHr'].value);
-        var stMin = 0;
-        //parseInt(document.forms[formIndex].elements['stMin'].value);
+        var stMin = parseInt(document.forms[formIndex].elements['stMin'].value);
         var dur = parseInt(document.forms[formIndex].elements['dur'].value);
         var repeatDur = parseInt(document.forms[formIndex].elements['freq'].value);
 
-        var stopMin = 0;
-        //        var stopMin = (stMin + dur) % 60;
+        var stopMin = (stMin + dur) % 60;
         var rollover = 0;
         if (dur + stMin >= 60 && dur < 60) {
             rollover = 1; //rollover minutes to hours
@@ -39,7 +37,7 @@ $(document).ready(function () {
         console.log("Orchard " + (1 + formIndex) + " cycle start:" + stHr + ":" + stMin);
         console.log("Orchard " + (1 + formIndex) + " cycle dur:" + dur);
         console.log("Orchard " + (1 + formIndex) + " cycle end:" + stopHr + ":" + stopMin);
-        particleSetCycle(index + " " + stHr + " " + stMin + " " + stopHr + " " + stopMin + " " + dur + " " + repeatDur, "setAlarm");
+        particleSetCycle(index + " " + stHr + " " + stMin + " " + stopHr + " " + stopMin + " " + repeatDur, "setAlarm");
     });
 
 
@@ -117,7 +115,6 @@ function updateCycleTime(index) {
     var startMin;
     var endHr;
     var endMin;
-    var cycleDur;
     var repeatDur;
 
     $.getJSON(requestURL, function (json) {
@@ -127,8 +124,7 @@ function updateCycleTime(index) {
             startMin = timeStringArray[1 + mul];
             endHr = timeStringArray[2 + mul];
             endMin = timeStringArray[3 + mul];
-            cycleDur = timeStringArray[4 + mul];
-            repeatDur = timeStringArray[5 + mul];
+            repeatDur = timeStringArray[4 + mul];
 
             //add padding to make it readable
             if (parseInt(startMin) < 10) {
@@ -153,7 +149,7 @@ function updateCycleTime(index) {
         .always(function () {
             console.log("updateCycleTime complete");
             //displayCicleTime takes an index arg to specify which html form to update
-            displayCycleTime(index, startHr, endHr, cycleDur, repeatDur, lastStartTime, lastEndTime);
+            displayCycleTime(index, startTime, endTime, repeatDur, lastStartTime, lastEndTime);
         });
 
 }
@@ -197,7 +193,7 @@ function displayAdhocDur(formIndex, dur) {
 }
 
 
-function displayCycleTime(formIndex, startTime, endTime, cycleDur, repeatDur, lastStartTime, lastEndTime) {
+function displayCycleTime(formIndex, startTime, endTime, repeatDur, lastStartTime, lastEndTime) {
 
     $(".form-container").each(function (index) {
 
@@ -205,22 +201,18 @@ function displayCycleTime(formIndex, startTime, endTime, cycleDur, repeatDur, la
             $('.cycleTime', this).remove() //remove any previous values on screen
 
             //update scheduled cycle times
-            $("#stHr option[value='" + startTime + "']").prop(' selected ', true);
-            $("#dur option[value='" + cycleDur + "']").prop(' selected ', true);
-            $("#freq option[value='" + repeatDur + "']").prop(' selected ', true);
-
+            $("#startTime", this).append('<b class="cycleTime"><br>' + startTime + ' </br></b>');
+            $("#endTime", this).append('<b class="cycleTime"><br>' + endTime + ' </br></b>');
+            $("#freqTime", this).append('<b class="cycleTime"><br>' + repeatDur + ' </br></b>');
             //    console.log("Schedule set for " + startHr + ":" + startMin + ". Will end at " + endHr + ":" + endMin);
-            $("#lastStartTime", this).append(
-                ' <b class="cycleTime">' + lastStartTime + ' </b>');
-
-            $("#lastEndTime", this).append(
-                '<b class="cycleTime"><br>' + lastEndTime + ' </br></b>');
+            $("#lastStartTime", this).append('<b class="cycleTime"><br>' + lastStartTime + ' </br></b>');
+            $("#lastEndTime", this).append('<b class="cycleTime"><br>' + lastEndTime + ' </br></b>');
         }
     });
 }
 
 function displayParticleStatus(formIndex) {
-    console.log("setting display");
+
     $(".form-container").each(function (index) {
 
         if (index == formIndex) {
@@ -236,13 +228,9 @@ function displayParticleStatus(formIndex) {
             $("#devName", this).append('<b class="particleStatus"><br> Particle 1 </br></b>');
 
             if (connectStatus == 0) {
-                $('form').css("background", "#FE1C49");
                 $("#connected", this).append('<b class="particleStatus" style="color:#FF0000";><br> ERROR </br></b>');
-
             } else if (connectStatus == 1) {
-                $('form').css("background", "#5abc9b");
                 $("#connected", this).append('<mark><b class="particleStatus"><br>Connected</br></b></mark>');
-
             } else {
                 $("#connected", this).append('<b class="particleStatus"><br> Waiting... </br></b>');
             }
