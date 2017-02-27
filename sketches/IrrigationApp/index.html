@@ -13,17 +13,39 @@
 
 <body>
 
+
+
     <div class="form-container">
         <form>
+
+            <div class="form-body" id="intro">
+
+                <div class="sub-container">
+                    <label>
+                            <div class="align-left" id="lastStartTime">Particle 1</div></label>
+                    <span>
+
+                <div><button class='wide-button' type="button" id="orchard1" value=0>Orchard 1</div>
+                    <div><button class='wide-button' type="button" id="orchard2" value=0>Orchard 2</div>
+                    <div><button class='wide-button' type="button" id="orchard3" value=0>Orchard 3</div>
+                    </span>
+                </div>
+
+
+            </div>
+
+
             <div id="form1">
                 <div class="form-header">
                     <label>
-                    <p class="align-left" id>Orchard 1</p>
+                        <p class="align-left"><span id="orchardID"></span>Orchard 1</span></p>
                         
-                    <p class="align-right" id="battery">Battery: </p>
-                        
-                    <p class="align-right" id="runState">Status: </p>
-                    </label>
+                    <p class="align-right" id="battery">Battery:
+                    <span class="battery-box" id="batteryStatus"> LOW </span> </p>  
+
+                    <p class="align-right" id="runState">Status: 
+                        <span class="run-box" id="runStatus"> Waiting </span></p>
+                     </label>
                 </div>
 
 
@@ -36,7 +58,6 @@
                         <p id="Vol">Volume:</p>
                         <p id="Flow">Flow Rate:</p>
                         <p id="VolTotal">Total Year:</p></span></div>
-
                     <div class="sub-container">
                         <label>                            <div class="align-left" id="lastStartTime">Program</div></label>
                         <span>
@@ -97,7 +118,7 @@
                         <option value="48">2 Days</option>
                         <option value="72">3 Days</option><option value="96">4 Days</option><option value="120">5 Days</option><option value="10080">7 Days</option> 
                         </select></p>
-                        <span><button type="button" id="cycleTime1" value=0>Update Cycle Settings</span>
+                        <div><button type="button" id="cycleTime">Update Cycle Settings</div>
 
                         </span>
                     </div>
@@ -106,8 +127,7 @@
                         <label>Ad Hoc</label>
                         <span>
                             <p> Duration: 
-
-                    <span><select name="Duration" id="adHocDur">
+                    <select name="Duration" id="adHocDur">
                     <option selected disabled>Duration</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
@@ -123,12 +143,13 @@
                     <option value="540">9 Hours</option>
                     <option value="600">10 Hours</option>
                     </select></p>
-                            </span></div>
+                        <div><button type="button" id="adhocTime">Do It</div>
+                        </span>
+                    </div>
                 </div>
 
             </div>
 
-        </form>
 
 
     </div>

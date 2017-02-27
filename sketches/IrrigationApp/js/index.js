@@ -5,28 +5,44 @@ var accessToken = "0ad112ded9e5e2a67fd3c2e21ec43556deb8c3d4";
 
 var urlLastCycleData = 'https://api.thingspeak.com/channels/218438/fields/7/last.txt';
 
+var battery = 1;
 var connectStatus = -1; // is the particel board communicating?
 var runningStatus = [-1, -1]; // DigitalOut power status
-
+var FORM_ID = -1; //different form id for each orchard / system
 
 $(document).ready(function () {
+    //start with all the forms hidden
+    $("#form1").hide();
+    $("#form2").hide();
+    $("#form3").hide();
 
-    updateParticleStatus(0);
-    //    updateParticleStatus(1);
-    updateCycleTime(0);
-    //    updateCycleTime(1);
-    updateAdhocTimer(0);
-    //    updateAdhocTimer(1);
 
-    $('#cycleTime1, #cycleTime2').click(function () {
-        var formIndex = parseInt($(this).val());
-        var index = formIndex;
-        console.log("ok " + formIndex);
-        var stHr = parseInt(document.forms[formIndex].elements['stHr'].value);
+    $("#orchard1").click(function () {
+        $("#intro").hide();
+        $("#form1").show();
+        FORM_ID = 0;
+        updateParticleStatus(FORM_ID);
+        updateCycleTime(FORM_ID);
+        updateAdhocTimer(FORM_ID);
+    });
+    $("#orchard2").click(function () {
+        $("#intro").hide();
+        $("#form1").show();
+        FORM_ID = 1;
+        updateParticleStatus(FORM_ID);
+        updateCycleTime(FORM_ID);
+        updateAdhocTimer(FORM_ID);
+    });
+
+
+    $('#cycleTime').click(function () {
+        var index = FORM_ID;
+        console.log("ok " + FORM_ID);
+        var stHr = parseInt(document.forms[FORM_ID].elements['stHr'].value);
         var stMin = 0;
-        //parseInt(document.forms[formIndex].elements['stMin'].value);
-        var dur = parseInt(document.forms[formIndex].elements['dur'].value);
-        var repeatDur = parseInt(document.forms[formIndex].elements['freq'].value);
+        //parseInt(document.forms[FORM_ID].elements['stMin'].value);
+        var dur = parseInt(document.forms[FORM_ID].elements['dur'].value);
+        var repeatDur = parseInt(document.forms[FORM_ID].elements['freq'].value);
 
         var stopMin = 0;
         //        var stopMin = (stMin + dur) % 60;
@@ -36,17 +52,16 @@ $(document).ready(function () {
         }
         var stopHr = parseInt(stHr) + rollover + Math.floor(dur / 60);
 
-        console.log("Orchard " + (1 + formIndex) + " cycle start:" + stHr + ":" + stMin);
-        console.log("Orchard " + (1 + formIndex) + " cycle dur:" + dur);
-        console.log("Orchard " + (1 + formIndex) + " cycle end:" + stopHr + ":" + stopMin);
+        console.log("Orchard " + (1 + FORM_ID) + " cycle start:" + stHr + ":" + stMin);
+        console.log("Orchard " + (1 + FORM_ID) + " cycle dur:" + dur);
+        console.log("Orchard " + (1 + FORM_ID) + " cycle end:" + stopHr + ":" + stopMin);
         particleSetCycle(index + " " + stHr + " " + stMin + " " + stopHr + " " + stopMin + " " + dur + " " + repeatDur, "setAlarm");
     });
 
 
-    $('#adhocTime1, #adhocTime2').click(function () {
-        var formIndex = parseInt($(this).val());
-        var index = formIndex;
-        var dur = parseInt(document.forms[formIndex].elements['adHocDur'].value);
+    $('#adhocTime1').click(function () {
+        var index = FORM_ID;
+        var dur = parseInt(document.forms[FORM_ID].elements['adHocDur'].value);
         console.log("adhoc dur:" + dur);
         particleSetCycle(index + " " + dur + " " + 0 + " " + 0 + " " + 0 + " " + 0, "setAdhoc");
     });
@@ -154,6 +169,7 @@ function updateCycleTime(index) {
             console.log("updateCycleTime complete");
             //displayCicleTime takes an index arg to specify which html form to update
             displayCycleTime(index, startHr, endHr, cycleDur, repeatDur, lastStartTime, lastEndTime);
+
         });
 
 }
@@ -200,14 +216,12 @@ function displayAdhocDur(formIndex, dur) {
 function displayCycleTime(formIndex, startTime, endTime, cycleDur, repeatDur, lastStartTime, lastEndTime) {
 
     $(".form-container").each(function (index) {
-
         if (index == formIndex) {
             $('.cycleTime', this).remove() //remove any previous values on screen
-
-            //update scheduled cycle times
-            $("#stHr option[value='" + startTime + "']").prop(' selected ', true);
-            $("#dur option[value='" + cycleDur + "']").prop(' selected ', true);
-            $("#freq option[value='" + repeatDur + "']").prop(' selected ', true);
+                //update scheduled cycle times
+            $("#stHr option[value='" + startTime + "']").prop("selected", true);
+            $("#dur option[value='" + cycleDur + "']").prop("selected", true);
+            $("#freq option[value='" + repeatDur + "']").prop("selected", true);
 
             //    console.log("Schedule set for " + startHr + ":" + startMin + ". Will end at " + endHr + ":" + endMin);
             $("#lastStartTime", this).append(
@@ -225,14 +239,36 @@ function displayParticleStatus(formIndex) {
 
         if (index == formIndex) {
             $('.particleStatus', this).remove() //remove any previous values on screen
-                //update status
+            $('#orchardID', this).remove();
+            $("#orchardID", this).append('Orchard ' + (FORM_ID + 1));
+
+            //display status
             if (runningStatus[index] == 0) {
-                $("#runState", this).append('<b class="particleStatus"><br> OFF </br></b>');
+                $("#runStatus", this).remove();
+                $("#runState", this).append('<span class="run-box"> OFF </span>');
+                $('.run-box').css("background", "#000");
+                $('.run-box').css("color", "#FFF");
+
             } else if (runningStatus[index] == 1) {
-                $("#runState", this).append('<mark><b class="particleStatus"><br>ON</br></b></mark>');
-            } else {
-                $("#runState", this).append('');
+                //display RUN status
+                $("#runStatus", this).remove();
+                $("#runState", this).append('<span class="run-box"> ON </span>');
+                $('.run-box').css("background", "#5abc9b");
             }
+            //            display battery status
+            if (battery == 0) {
+                $("#batteryStatus", this).remove();
+                $("#battery", this).append('<span class="battery-box"> LOW </span>');
+                $('.battery-box').css("background", "#FE1C49");
+                $('.battery-box').css("color", "#000");
+
+            } else if (battery == 1) {
+                //display RUN status
+                $("#batteryStatus", this).remove();
+                $("#battery", this).append('<span class="battery-box"> FULL </span>');
+                $('.battery-box').css("background", "#5abc9b");
+            }
+            //display device name
             $("#devName", this).append('<b class="particleStatus"><br> Particle 1 </br></b>');
 
             if (connectStatus == 0) {
