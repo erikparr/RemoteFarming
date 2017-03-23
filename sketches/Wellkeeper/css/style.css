@@ -1,0 +1,125 @@
+body {
+  font: normal 18px/1.5 "Fira Sans", "Open Sans", sans-serif;
+  background: #CCC;
+  color: #fff;
+  padding: 0; }
+
+.form-container {
+  display: hidden;
+  display: -webkit-flex;
+  justify-content: center;
+  align-items: center; }
+
+form {
+  width: 100%;
+  max-width: 1000px;
+  padding: 2em;
+  background: #e6e6e6;
+  border-radius: 0.25em;
+  box-shadow: 0 0 2em rgba(0, 0, 0, 0.2); }
+
+select {
+  font-size: 1em;
+  background: #fff;
+  font-family: inherit;
+  border: none;
+  padding: 5px;
+  border-radius: 0em; }
+
+.align-right {
+  float: right;
+  margin-right: 15px; }
+
+.align-left {
+  float: left; }
+
+.form-header {
+  display: -webkit-flex;
+  flex-direction: row;
+  margin-bottom: 0.5em; }
+  .form-header label {
+    -webkit-flex: 0 1 1200em;
+    background: #FFF;
+    border: 1px solid #e6e6e6;
+    color: #2d2d2d;
+    font-weight: 400;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    font-size: 0.75em;
+    text-align: center;
+    lint-height: 1; }
+  .form-header .run-box {
+    width: 100px;
+    display: block;
+    right: 80%;
+    background: #CCC;
+    border: none;
+    border-radius: 0px;
+    padding: 0.5em;
+    margin-top: 10px; }
+  .form-header .battery-box {
+    width: 100px;
+    display: block;
+    right: 80%;
+    background: #CCC;
+    border: none;
+    border-radius: 0px;
+    padding: 0.5em;
+    margin-top: 10px; }
+  @media screen and (max-width: 700px) {
+    .form-header {
+      -webkit-flex-wrap: wrap; }
+      .form-header label {
+        -webkit-flex: 1;
+        -webkit-flex-direction: column; } }
+
+.form-body {
+  display: -webkit-flex;
+  flex-direction: row;
+  margin-bottom: 0.5em;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: #2d2d2d; }
+  .form-body .sub-container {
+    display: -webkit-flex;
+    position: relative;
+    -webkit-flex: 0 1 300em;
+    flex-direction: column;
+    border: 1px solid #e6e6e6; }
+    .form-body .sub-container label {
+      padding: 1em;
+      background: #FFF;
+      border: 1px solid #e6e6e6;
+      font-size: 0.75em;
+      lint-height: 1; }
+    .form-body .sub-container span {
+      padding: 1em;
+      background: #CCC;
+      font-size: 0.75em;
+      lint-height: 1;
+      min-height: 200px; }
+    .form-body .sub-container button {
+      width: 150px;
+      background: #7298fc;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      padding: 0.7em; }
+    .form-body .sub-container button:hover {
+      color: white; }
+    .form-body .sub-container .wide-button {
+      width: 90%;
+      background: #7298fc;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      padding: 1.5em; }
+    .form-body .sub-container .wide-button:hover {
+      color: white; }
+  @media screen and (max-width: 700px) {
+    .form-body {
+      -webkit-flex-wrap: wrap; } }
+
+/*# sourceMappingURL=style.css.map */
