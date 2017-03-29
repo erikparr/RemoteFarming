@@ -2,7 +2,7 @@
 /*global $, jQuery, alert*/
 //var deviceID = "450039000e51353433323633"; // irrigation particle
 var deviceID = "3b003b000951343334363138"; // security particle
-var accessToken = "0ad112ded9e5e2a67fd3c2e21ec43556deb8c3d4";
+var accessToken = "xxxx";
 
 var urlLastCycleData1 = 'https://api.thingspeak.com/channels/248593/fields/1/last.txt';
 var urlLastCycleData2 = 'https://api.thingspeak.com/channels/248593/fields/2/last.txt';
