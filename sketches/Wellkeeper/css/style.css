@@ -48,24 +48,6 @@ select {
     font-size: 0.75em;
     text-align: center;
     lint-height: 1; }
-  .form-header .run-box {
-    width: 100px;
-    display: block;
-    right: 80%;
-    background: #CCC;
-    border: none;
-    border-radius: 0px;
-    padding: 0.5em;
-    margin-top: 10px; }
-  .form-header .battery-box {
-    width: 100px;
-    display: block;
-    right: 80%;
-    background: #CCC;
-    border: none;
-    border-radius: 0px;
-    padding: 0.5em;
-    margin-top: 10px; }
   @media screen and (max-width: 700px) {
     .form-header {
       -webkit-flex-wrap: wrap; }
@@ -98,8 +80,54 @@ select {
       padding: 1em;
       background: #CCC;
       font-size: 0.75em;
-      lint-height: 1;
-      min-height: 200px; }
+      lint-height: 1; }
+    .form-body .sub-container .text-box {
+      font-size: 1em;
+      font-weight: 400;
+      display: inline-block;
+      min-width: 100px;
+      background: #CCC;
+      border: none;
+      border-radius: 0px;
+      padding: 0.5em;
+      margin-top: 10px; }
+    .form-body .sub-container .status-box {
+      display: inline-block;
+      min-width: 100px;
+      height: 20px;
+      right: 80%;
+      background: #FFF;
+      border: none;
+      border-radius: 0px;
+      padding: 0.5em;
+      margin-top: 10px; }
+    .form-body .sub-container .batterySensor-box {
+      display: inline-block;
+      min-width: 100px;
+      height: 20px;
+      right: 80%;
+      background: #FFF;
+      border: none;
+      border-radius: 0px;
+      padding: 0.5em; }
+    .form-body .sub-container .tankSensor-box {
+      display: inline-block;
+      min-width: 100px;
+      height: 20px;
+      right: 80%;
+      background: #FFF;
+      border: none;
+      border-radius: 0px;
+      padding: 0.5em; }
+    .form-body .sub-container .alarmStatus-box {
+      display: inline-block;
+      min-width: 100px;
+      height: 20px;
+      right: 80%;
+      background: #FFF;
+      border: none;
+      border-radius: 0px;
+      padding: 0.5em; }
     .form-body .sub-container button {
       width: 150px;
       background: #7298fc;

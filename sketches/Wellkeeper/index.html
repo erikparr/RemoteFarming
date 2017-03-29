@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Irrigation App</title>
+    <title>Wellkeeper App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Fira+Sans:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css">
@@ -18,33 +18,17 @@
     <div class="form-container">
         <form>
 
-            <div class="form-body" id="intro">
-
-                <div class="sub-container">
-                    <label>
-                            <div class="align-left" id="lastStartTime">Particle 1</div></label>
-                    <span>
-
-                <div><button class='wide-button' type="button" id="orchard1" value=0>Orchard 1</div>
-                    <div><button class='wide-button' type="button" id="orchard2" value=0>Orchard 2</div>
-                    <div><button class='wide-button' type="button" id="orchard3" value=0>Orchard 3</div>
-                    </span>
-                </div>
 
 
-            </div>
-
-
-            <div id="form1">
+            <div id="form">
                 <div class="form-header">
                     <label>
-                        <p class="align-left"><span id="orchardID"></span>Orchard 1</span></p>
+                        <p class="align-left"><span id="orchardID"></span>Water Sources</span></p>
                         
                     <p class="align-right" id="battery">Battery:
                     <span class="battery-box" id="batteryStatus"> LOW </span> </p>  
 
-                    <p class="align-right" id="runState">Status: 
-                        <span class="run-box" id="runStatus"> Waiting </span></p>
+                    </p>
                      </label>
                 </div>
 
@@ -52,100 +36,27 @@
                 <div class="form-body">
 
                     <div class="sub-container">
-                        <label>
-                            <div class="align-left" id="lastStartTime">Last Cycle</div></label>
-                        <span>
-                        <p id="Vol">Volume:</p>
-                        <p id="Flow">Flow Rate:</p>
-                        <p id="VolTotal">Total Year:</p></span></div>
-                    <div class="sub-container">
-                        <label>                            <div class="align-left" id="lastStartTime">Program</div></label>
+                        <label><div class="align-left" id="tankID">Tank Borehole1</div>
+                        <div class="align-right" id="deviceID">Particle 1</div></label>
                         <span>
                             
-                    <p id="startTime">Start Time: 
-                        <select name="hour" id="stHr">
-                    <option selected disabled>Hour</option>
-                    <option value="0">0:00</option>
-                    <option value="1">1:00</option>
-                    <option value="2">2:00</option>
-                    <option value="3">3:00</option>
-                    <option value="4">4:00</option>
-                    <option value="5">5:00</option>
-                    <option value="6">6:00</option>
-                    <option value="7">7:00</option>
-                    <option value="8">8:00</option>
-                    <option value="9">9:00</option>
-                    <option value="10">10:00</option>
-                    <option value="11">11:00</option>
-                    <option value="12">12:00</option>
-                    <option value="13">13:00</option>
-                    <option value="14">14:00</option>
-                    <option value="15">15:00</option>
-                    <option value="16">16:00</option>
-                    <option value="17">17:00</option>
-                    <option value="18">18:00</option>
-                    <option value="19">19:00</option>
-                    <option value="20">20:00</option>
-                    <option value="21">21:00</option>
-                    <option value="22">22:00</option>
-                    <option value="23">23:00</option>
-                </select></p>
-                            
-                    <p id="endTime">Duration:
-                        <select name="Duration" id="dur">
-                    <option selected disabled>Duration</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="30">30</option>
-                    <option value="60">1 Hour</option>
-                    <option value="120">2 Hours</option>
-                    <option value="180">3 Hours</option>
-                    <option value="240">4 Hours</option>
-                    <option value="300">5 Hours</option>
-                    <option value="360">6 Hours</option>
-                    <option value="420">7 Hours</option>
-                    <option value="480">8 Hours</option>
-                    <option value="540">9 Hours</option>
-                    <option value="600">10 Hours</option>
-                </select></p>
-                            
-                    <p id="freqTime">Frequency:
-                    <select name="Frequency" id="freq">
-                    <option selected disabled value="0">Frequency</option>
-                        <option value="8">8 Hours</option>
-                        <option value="12">12 Hours</option>
-                        <option value="24">24 Hours</option>
-                        <option value="48">2 Days</option>
-                        <option value="72">3 Days</option><option value="96">4 Days</option><option value="120">5 Days</option><option value="10080">7 Days</option> 
-                        </select></p>
-                        <div><button type="button" id="cycleTime">Update Cycle Settings</div>
+                            <span class="text-box" id="statusText">Status</span>
+                        <span class="status-box" id="status"> Waiting </span>
+                        <br></br>
+                        <span class="text-box" id="tank">Tank</span>
+                        <span class="tankSensor-box" id="tankSensor">  - </span>
+                        <br></br>
+                        <span class="text-box" id="battery">Battery</span>
+                        <span class="batterySensor-box" id="batterySensor"> - </span>
+                        <br></br>
+                        <span class="text-box" id="alarm">Alarm</span>
+                        <span class="alarmStatus-box" id="alarmStatus"> - </span>
+                        <br></br>
+                        <div><button type="button" id="activate-button" value=0 disabled> Connecting... </div>
 
                         </span>
                     </div>
 
-                    <div class="sub-container">
-                        <label>Ad Hoc</label>
-                        <span>
-                            <p> Duration: 
-                    <select name="Duration" id="adHocDur">
-                    <option selected disabled>Duration</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="30">30</option>
-                    <option value="60">1 Hour</option>
-                    <option value="120">2 Hours</option>
-                    <option value="180">3 Hours</option>
-                    <option value="240">4 Hours</option>
-                    <option value="300">5 Hours</option>
-                    <option value="360">6 Hours</option>
-                    <option value="420">7 Hours</option>
-                    <option value="480">8 Hours</option>
-                    <option value="540">9 Hours</option>
-                    <option value="600">10 Hours</option>
-                    </select></p>
-                        <div><button type="button" id="adhocTime">Do It</div>
-                        </span>
-                    </div>
                 </div>
 
             </div>

@@ -57,26 +57,6 @@ select {
         text-align: center;
         lint-height: 1;
     }
-    .run-box {
-        width: 100px;
-        display: block;
-        right: 80%;
-        background: #CCC;
-        border: none;
-        border-radius: 0px;
-        padding: 0.5em;
-        margin-top: 10px;
-    }
-    .battery-box {
-        width: 100px;
-        display: block;
-        right: 80%;
-        background: #CCC;
-        border: none;
-        border-radius: 0px;
-        padding: 0.5em;
-        margin-top: 10px;
-    }
     @media screen and (max-width: $break-small) {
         -webkit-flex-wrap: wrap;
         label {
@@ -113,7 +93,58 @@ select {
             background: #CCC;
             font-size: 0.75em;
             lint-height: 1;
-            min-height: 200px;
+        }
+        .text-box {
+            font-size: 1em;
+            font-weight: 400;
+            display: inline-block;
+            min-width: 100px;
+            background: #CCC;
+            border: none;
+            border-radius: 0px;
+            padding: 0.5em;
+            margin-top: 10px;
+        }
+        .status-box {
+            display: inline-block;
+            min-width: 100px;
+            height: 20px;
+            right: 80%;
+            background: #FFF;
+            border: none;
+            border-radius: 0px;
+            padding: 0.5em;
+            margin-top: 10px;
+        }
+        .batterySensor-box {
+            display: inline-block;
+            min-width: 100px;
+            height: 20px;
+            right: 80%;
+            background: #FFF;
+            border: none;
+            border-radius: 0px;
+            padding: 0.5em;
+        }
+        .tankSensor-box {
+            display: inline-block;
+            min-width: 100px;
+            height: 20px;
+            right: 80%;
+            background: #FFF;
+            border: none;
+            border-radius: 0px;
+            padding: 0.5em;
+        }
+        .alarmStatus-box {
+            display: inline-block;
+            min-width: 100px;
+            height: 20px;
+            right: 80%;
+            background: #FFF;
+            border: none;
+            border-radius: 0px;
+            padding: 0.5em;
         }
         button {
             //            position: absolute;
