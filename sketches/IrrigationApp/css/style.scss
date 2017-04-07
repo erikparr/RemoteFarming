@@ -87,6 +87,9 @@ select {
 }
 
 .form-body {
+    input[type="text"] {
+        width: 75px;
+    }
     display: -webkit-flex;
     flex-direction: row;
     margin-bottom: 0.5em;

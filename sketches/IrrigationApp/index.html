@@ -25,9 +25,11 @@
                             <div class="align-left" >Particle 1</div></label>
                     <span>
 
-                <div><button class='wide-button' type="button" id="orchard1" value=0>Orchard 1</div>
-                    <div><button class='wide-button' type="button" id="orchard2" value=0>Orchard 2</div>
-                    <div><button class='wide-button' type="button" id="orchard3" value=0>Orchard 3</div>
+                        
+                <div><button class='wide-button' type="button" id="orchard1" value=0>Citrus (Red)</div>
+                    <div><button class='wide-button' type="button" id="orchard2" value=0>Food Forest (Black)</div>
+                    <div><button class='wide-button' type="button" id="orchard3" value=0>Almonds & Pistachio (Yellow)</div>
+                    <div><button class='wide-button' type="button" id="wellkeeper" value=0>WellKeeper App</div>
                     <div><button class='wide-button' type="button" id="configBt" value=0>Configuration</div>
                     </span>
                 </div>
@@ -42,10 +44,10 @@
                         <p class="align-left"><span id="orchardID"></span>Orchard 1</span></p>
                         
                     <p class="align-right" id="battery">Battery:
-                    <span class="battery-box" id="batteryStatus"> LOW </span> </p>  
+                    <span class="battery-box" id="voltage"> - </span> </p>  
 
                     <p class="align-right" id="runState">Status: 
-                        <span class="run-box" id="runStatus"> Waiting </span></p>
+                        <span class="run-box" id="runStatus"> - </span></p>
                      </label>
                 </div>
 
@@ -54,15 +56,22 @@
 
                     <div class="sub-container">
                         <label>
-                            <div class="align-left">Last Cycle</div></label>
+                            <div class="align-left">Last Cycle</div>
+                           <div class="align-right" id="timeStamp"></div></label>
                         <span>
-                        <p id="Vol">Volume:</p>
-                        <p id="Flow">Flow Rate:</p>
-                        <p id="VolTotal">Total Year:</p></span></div>
+<p id="dailyVol">Volume: </p>
+<p id="dailyFlow">Flow Rate: </p>
+<p id="yearVolTotal">Total Year: </p>
+<p id="cycleDur">Duration: </p>
+<p id="flowAnom">Flow Anomaly: </p>
 
+</span>
+                    </div>
                     <div class="sub-container">
-                        <label>                            
-                            <div class="align-left" >Program</div></label>
+                        <label id="programInfo">                            
+                            <div class="align-left" >Program </div>
+                            <div class="align-right" id="volEstimate"></div>
+                        </label>
                         <span>
                             
                     <p id="startTime">Start Time: 
@@ -97,7 +106,13 @@
                     <p id="endTime">Duration:
                         <select name="Duration" id="dur">
                     <option selected disabled>Duration</option>
-                    <option value="60">1 Hour</option>
+                    <option value="5">5 Min</option>
+                    <option value="10">10 Min</option>
+                    <option value="15">15 Min</option>
+                    <option value="20">20 Min</option>
+                    <option value="30">30 Min</option>
+                    <option value="45">45 Min</option>
+                    <option value="60">60 Min</option>
                     <option value="120">2 Hours</option>
                     <option value="180">3 Hours</option>
                     <option value="240">4 Hours</option>
@@ -111,9 +126,7 @@
                             
                     <p id="freqTime">Frequency:
                     <select name="Frequency" id="freq">
-                    <option selected disabled value="0">Frequency</option>
-                        <option value="1">1 Hour</option>
-                        <option value="2">2 Hour</option>
+                    <option selected disabled>Frequency</option>
                         <option value="8">8 Hours</option>
                         <option value="12">12 Hours</option>
                         <option value="24">24 Hours</option>
@@ -126,7 +139,10 @@
                     </div>
 
                     <div class="sub-container">
-                        <label>Ad Hoc</label>
+                        <label id="adhocInfo">
+                            <div class="align-left" >AD HOC </div>
+                            <div class="align-right" id="adhocEstimate"></div>
+                        </label>
                         <span>
                             <p> Duration: 
                     <select name="Duration" id="adHocDur">
@@ -161,11 +177,6 @@
                     <label>
                         <p class="align-left"><span id="formID"></span>CONFIG</span></p>
                         
-                    <p class="align-right" id="battery">Battery:
-                    <span class="battery-box" id="batteryStatus"> LOW </span> </p>  
-
-                    <p class="align-right" id="runState">Status: 
-                        <span class="run-box" id="runStatus"> Waiting </span></p>
                      </label>
                 </div>
 
@@ -174,13 +185,22 @@
 
                     <div class="sub-container">
                         <label>
-                            <div class="align-left">Last Cycle</div></label>
+                            <div class="align-left">Config Settings</div></label>
                         <span>
-                        <p>Wait Time<input type="text" id="flowWait" value="-"></p>
-                        <p>Pulse Rate<input type="text" id="flowPulse" value="-"></p>
-                        <p>Flow-Rate Multiplier<input type="text" id="flowMul" value="-"></p> 
-                        <p>Pulses per Liter<input type="text" id="ppl" value="-"></p> 
-                        <p>UTC Time Zone<input type="text" id="utcZone" value="-"></p></span>
+                        <span>Flow Rate Read Delay (Seconds)</span>
+                        <input class="align-right" type="text" id="flowWait" value="-">
+                        <br><br>
+                        <span>Flow-Rate Multiplier</span>
+                        <input class="align-right" type="text" id="flowMul" value="-">
+                        <br><br>
+                        <span>Pulses per Liter</span>
+                        <input class="align-right" type="text" id="ppl" value="-">
+                        <br><br>
+                        <span>UTC Time Zone</span>
+                        <input class="align-right" type="text" id="utcZone" value="-">
+                        <br><br>
+                        <div><button class='wide-button' type="button" id="uploadConfig" value=0>Send To Particle</div>
+                            </span>
                     </div>
 
                 </div>

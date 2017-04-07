@@ -1,8 +1,9 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
 //var deviceID = "3b003b000951343334363138";
-var deviceID = "450039000e51353433323633";
-var accessToken = "0ad112ded9e5e2a67fd3c2e21ec43556deb8c3d4";
+//var deviceID = "450039000e51353433323633"; 
+var deviceID = "2e0043001951343334363036";
+var accessToken = "b427f562daa91b5a02d16a429740de7c762ce53d";
 
 var urlLastCycleData = 'https://api.thingspeak.com/channels/218438/fields/7/last.txt';
 
@@ -13,7 +14,7 @@ var alarmBtStatus = false;
 $(document).ready(function () {
 
     //    updateParticleStatus("deviceID"); // we can get the real deviceID but for now its just hard-coded to save BW
-    updateParticleStatus("cm");
+    updateParticleStatus("tankLiters");
     updateParticleStatus("volt");
     updateParticleStatus("active");
 
@@ -48,11 +49,11 @@ function updateParticleStatus(particleVariable) {
         .always(function () {
             runningStatus = result;
             console.log(particleVariable + " status complete");
-            if (particleVariable == "cm") {
+            if (particleVariable == "tankLiters") {
                 displayTankVolume(parseInt(result));
             }
             if (particleVariable == "volt") {
-                displayBatteryVolt(result);
+                displayBatteryVolt(parseFloat(result).toFixed(2));
             }
             if (particleVariable == "active") {
                 displayAlarmStatus(result);
@@ -103,7 +104,7 @@ function displayTankVolume(tankVolume) {
 
 function displayBatteryVolt(voltage) {
 
-    $(".batterySensor-box").replaceWith('<span class="batterySensor-box" id="batterySensor">' + voltage.toString() + ' </span>');
+    $(".batterySensor-box").replaceWith('<span class="batterySensor-box" id="batterySensor">' + voltage.toString() + 'V </span>');
     if (parseInt(voltage) > 5) {
         $('.batterySensor-box').css("background", "#5abc9b");
         $('.batterySensor-box').css("color", "#000");

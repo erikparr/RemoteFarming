@@ -1,0 +1,4 @@
+AuthType Basic  
+AuthName "restricted area"  
+AuthUserFile /home/testsite_ep/test.erikparr.com/IrrigationApp/.htpasswd  
+require valid-user

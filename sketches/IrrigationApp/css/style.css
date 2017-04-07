@@ -82,6 +82,8 @@ select {
   letter-spacing: .09em;
   text-transform: uppercase;
   color: #2d2d2d; }
+  .form-body input[type="text"] {
+    width: 75px; }
   .form-body .sub-container {
     display: -webkit-flex;
     position: relative;
