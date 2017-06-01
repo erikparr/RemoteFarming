@@ -459,13 +459,6 @@ void manageTime() {
 
 }
 
-// once an hour we publish all our data to the cloud
-void publishHourly() {
-    //DEVICE: Irrigation-Particle1
-    //IRRIGATION SYSTEM 1
-    /*Particle.publish("analogRead",String(analogvalue),PRIVATE);*/
-}
-
 
 
 void publishDaily() {
@@ -508,8 +501,8 @@ void publishLastCycle2() {
 }
 
 void publishLastCycle3() {
-    String publishString = String(t3StartHour) + ":" + String(t3StartMin) + " "+ String(cycleDur3) + String(litersPerMinute3) + " " + String(dFlowAnm3) + " "+ String(volt) +" - " +(Time.timeStr());
-    Particle.publish("lastCycle3", publishString, PRIVATE); //publish last water cycle for orchard 3
+    String publishString = String(t2StartHour) + ":" + String(t2StartMin) + " "+ String(cycleDur2) + String(litersPerMinute2) + " " + String(dFlowAnm2) + " "+ String(volt) +" - " +(Time.timeStr());
+    Particle.publish("lastCycle2", publishString, PRIVATE); //publish last water cycle for orchard 2
 }
 
 
