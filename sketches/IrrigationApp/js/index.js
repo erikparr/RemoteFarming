@@ -44,6 +44,16 @@ $(document).ready(function () {
         updateAdhocTimer(FORM_ID);
     });
 
+    $("#orchard3").click(function () {
+        $("#intro").hide();
+        $("#config").hide();
+        $("#form1").show();
+        FORM_ID = 1;
+        updateParticleStatus(FORM_ID);
+        updateCycleTime(FORM_ID);
+        updateAdhocTimer(FORM_ID);
+    });
+
     $("#wellkeeper").click(function () {
         //wellkeeper app is held at another address
         window.location = "http://kaubisch.org/WellKeeper/index.html";
@@ -215,11 +225,8 @@ function updateCycleTime(index) {
     //    }, 'text');
 
     // then get current cycle data from  particle
-    if (index == 0) {
-        requestURL = getRequestUrl("cycleTime1");
-    } else if (index == 1) {
-        requestURL = getRequestUrl("cycleTime2");
-    }
+    var requestString = "cycleTime" + (index + 1);
+    requestURL = getRequestUrl(requestString);
     var startHr;
     var startMin;
     var endHr;
@@ -315,7 +322,7 @@ function updateConfig() {
 }
 
 function updateDailyVolume(index) {
-    requestURL = getRequestUrl("volString1");
+    requestURL = getRequestUrl("volString" + (index + 1));
     var volumeString;
     $.getJSON(requestURL, function (json) {
             volumeString = json.result;
@@ -459,42 +466,50 @@ function displayCycleTime(formIndex, startTime, endTime, repeatDur) {
 
 function displayParticleStatus(formIndex) {
     console.log("setting display");
-    $(".form-container").each(function (index) {
 
-        if (index == formIndex) {
-            $('.particleStatus', this).remove() //remove any previous values on screen
-            $('#orchardID', this).remove();
-            $("#orchardID", this).append('Orchard ' + (FORM_ID + 1));
+    if (index == formIndex) {
+        $('#orchardID').remove();
 
-            //display status
-            if (runningStatus[index] == 0) {
-                $("#runStatus", this).remove();
-                $("#runState", this).append('<span class="run-box"> OFF </span>');
-                $('.run-box').css("background", "#000");
-                $('.run-box').css("color", "#FFF");
-
-            } else if (runningStatus[index] == 1) {
-                //display RUN status
-                $("#runStatus", this).remove();
-                $("#runState", this).append('<span class="run-box"> ON </span>');
-                $('.run-box').css("background", "#5abc9b");
-            }
-            //                            display battery status
-            //            if (battery == 0) {
-            //                $("#batteryStatus", this).remove();
-            //                $("#battery", this).append('<span class="battery-box"> LOW </span>');
-            //                $('.battery-box').css("background", "#FE1C49");
-            //                $('.battery-box').css("color", "#000");
-            //
-            //            } else if (battery == 1) {
-            //                //display RUN status
-            //                $("#batteryStatus", this).remove();
-            //                $("#battery", this).append('<span class="battery-box"> FULL </span>');
-            //                $('.battery-box').css("background", "#5abc9b");
-            //            }   
+        var orchardname = "";
+        if (formIndex == 0) {
+            orchardname = "Citrus";
         }
+        if (formIndex == 1) {
+            orchardname = "Food Forest";
+        }
+        if (formIndex == 2) {
+            orchardname = "Almonds and Pistachio";
+        }
+        $("#orchardID", this).append(orchardname);
 
-    });
+        //display status
+        if (runningStatus[index] == 0) {
+            $("#runStatus", this).remove();
+            $("#runState", this).append('<span class="run-box"> OFF </span>');
+            $('.run-box').css("background", "#000");
+            $('.run-box').css("color", "#FFF");
+
+        } else if (runningStatus[index] == 1) {
+            //display RUN status
+            $("#runStatus", this).remove();
+            $("#runState", this).append('<span class="run-box"> ON </span>');
+            $('.run-box').css("background", "#5abc9b");
+        }
+        //                            display battery status
+        //            if (battery == 0) {
+        //                $("#batteryStatus", this).remove();
+        //                $("#battery", this).append('<span class="battery-box"> LOW </span>');
+        //                $('.battery-box').css("background", "#FE1C49");
+        //                $('.battery-box').css("color", "#000");
+        //
+        //            } else if (battery == 1) {
+        //                //display RUN status
+        //                $("#batteryStatus", this).remove();
+        //                $("#battery", this).append('<span class="battery-box"> FULL </span>');
+        //                $('.battery-box').css("background", "#5abc9b");
+        //            }   
+    }
+
 }
 
 function displayConnectionStatus() {

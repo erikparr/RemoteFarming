@@ -143,24 +143,24 @@ void setup() {
     //  offAlarmT1 = Alarm.alarmOnce(t1EndHour,t1EndMin,0, powerOff1);
     //  onAlarmT2 = Alarm.alarmOnce(t2StartHour,t2StartMin,0, powerOn2);
     //  offAlarmT2 = Alarm.alarmOnce(t2EndHour,t2EndMin,0, powerOff2);litersPerMinute
-
-
+    
+    
     //flow sensor setup
     msTimer.begin(msISR, 1000, uSec);  // trigger every 1000µs
     pinMode(flowsensorPin1, INPUT_PULLUP);
     attachInterrupt(flowsensorPin1, senseISR, FALLING);
-
-
+    
+    
     dailySync(); //sync time
     // Serial.begin(9600);
     // pinMode(photoresistor, INPUT);
     // pinMode(power, OUTPUT); // The pin powering the photoresistor is output (sending out consistent power)
     // digitalWrite(power, HIGH);
-
+    
     Alarm.alarmRepeat(3, 00, 0, dailyTasks); //  at 3AM every day
-
+    
     pinMode(voltageInput, INPUT); // voltage input A1
-
+    
     pinMode(waterValve1, OUTPUT);
     pinMode(waterValve2, OUTPUT);
     pinMode(waterValve3, OUTPUT);
@@ -169,8 +169,8 @@ void setup() {
     Particle.function("setAdhoc", setAdhocTime); // set ad hoc watering control
     Particle.function("manualStop", setManualStop); // set ad hoc watering control
     Particle.function("setConfig", setConfig); // set config settings from web menu
-
-
+    
+    
     //   Particle.function("getcycleTimeString", cycleTimeString);
     Particle.variable("runState1", &powerState1, INT);
     Particle.variable("runState2", &powerState2, INT);
@@ -186,27 +186,27 @@ void setup() {
     Particle.variable("volString1", &volString1, STRING);
     Particle.variable("volString2", &volString1, STRING);
     Particle.variable("volString3", &volString1, STRING);
-
+    
     // Particle.variable("litersPM", litersPerMinute);
-
+    
     cycleTimeString1 = String(t1StartHour) + " " + String(t1StartMin) + " " + String(t1EndHour) + " " + String(t1EndMin) + " " + String(cycleDur1) +" "+ String(repeatDur1);
     cycleTimeString2 = String(t2StartHour) + " " + String(t2StartMin) + " " + String(t2EndHour) + " " + String(t2EndMin)+ " " + String(cycleDur2) + " "+ String(repeatDur2);
     cycleTimeString3 = String(t3StartHour) + " " + String(t3StartMin) + " " + String(t3EndHour) + " " + String(t3EndMin)+ " " + String(cycleDur3) + " "+ String(repeatDur3);
-
+    
     configString = String(flowmeterDelay)  + " " + String(flowrateMul) + " " + String(ppl)+ " " + String(utcTimeZone) + " " + String(flowThreshPct);
-
+    
     volString1 = String(dvol1)+ " " + String(dFlowRt1) + " " + String(yearVolTotal1) + " " + Time.timeStr() + " " + String(cycleDuration1) + " " + String(dFlowAnm1);
     volString2 = String(dvol1)+ " " + String(dFlowRt1) + " " + String(yearVolTotal2) + " " + Time.timeStr() + " " + String(cycleDuration2) + " " + String(dFlowAnm2);
     volString3 = String(dvol1)+ " " + String(dFlowRt1) + " " + String(yearVolTotal3) + " " + Time.timeStr() + " " + String(cycleDuration3) + " " + String(dFlowAnm3);
-
+    
     //p1data_request
     //    Particle.subscribe("hook-response/getLast", getLastHandler, MY_DEVICES);
-
-
+    
+    
     digitalWrite(waterValve1, LOW); //init LOW to make sure its OFF
     digitalWrite(waterValve2, LOW); //init LOW to make sure its OFF
     digitalWrite(waterValve3, LOW); //init LOW to make sure its OFF
-
+    
     //*** SCHEDULING ***
     //Berlin time zone
     Time.zone(utcTimeZone); // Berlin = UTC+2
@@ -215,12 +215,12 @@ void setup() {
 
 
 void loop() {
-
+    
     // flowRate = (revPerSec * 1.8);        //Take counted pulses in the last second and multiply by 2.25mL
     // flowRate = flowRate * 60;         //Convert seconds to minutes, giving you mL / Minute
     // litersPerMinute = flowRate / 1000;       //Convert mL to Liters, giving you Liters / Minute
     /*Serial.println(litersPerMinute);*/
-
+    
     // read the value at analog input
     voltValue = analogRead(voltageInput);
     vout = (voltValue * 5.0) / 1024.0; // see text
@@ -230,8 +230,8 @@ void loop() {
     Serial.println(volt);
     manageTime();
     // analogvalue = analogRead(photoresistor);
-
-
+    
+    
     //bPublishData returns true once an hour
     if (bPublishData == true) {
         publishHourly();
@@ -239,12 +239,12 @@ void loop() {
     delay(1000); // update only once a second
     // !Must have this for alarm to update!
     Alarm.delay(1000);
-
-
+    
+    
 }
 
 int setAdhocTime(String timeString) {
-
+    
     //convert timeString we got from the cloud into an array of usable values
     //Begin black magic supplied by @mdma at:
     // https://community.spark.io/t/gpio-control-via-gui/6310/7
@@ -252,7 +252,7 @@ int setAdhocTime(String timeString) {
     timeString.toCharArray(charBuf, 20);
     const int value_count = 8; // the maximum number of values
     int values[value_count]; // store the values here
-
+    
     char string[20];
     strcpy(string, charBuf); // the string to split
     int idx = 0;
@@ -260,7 +260,7 @@ int setAdhocTime(String timeString) {
         values[idx++] = atoi(pt);
     }
     //End black magic.
-
+    
     //assign values
     // first we get the index of which orchard is getting set
     int index = values[0];
@@ -271,7 +271,7 @@ int setAdhocTime(String timeString) {
         cycleDuration1 = adhocDur1;
         adhocTstamp1 = millis();
         bAdhocOn1 = true;
-
+        
     } else if (index == 1) {
         powerOn2();
         adhocDur2 = values[1] * 60 * 1000; //get in MILLIS
@@ -285,7 +285,7 @@ int setAdhocTime(String timeString) {
         adhocTstamp3 = millis();
         bAdhocOn3 = true;
     }
-
+    
     return 1;
 }
 
@@ -297,7 +297,7 @@ int setManualStop(String indexString){
     indexString.toCharArray(charBuf, 20);
     const int value_count = 8; // the maximum number of values
     int values[value_count]; // store the values here
-
+    
     char string[20];
     strcpy(string, charBuf); // the string to split
     int idx = 0;
@@ -305,10 +305,10 @@ int setManualStop(String indexString){
         values[idx++] = atoi(pt);
     }
     //End black magic.
-
-
+    
+    
     int index = values[0];
-
+    
     if(index==0){
         manualOff1 = true;
         powerOff1();
@@ -334,7 +334,7 @@ int setConfig(String configInputString){
     configInputString.toCharArray(charBuf, 20);
     const int value_count = 8; // the maximum number of values
     int values[value_count]; // store the values here
-
+    
     char string[20];
     strcpy(string, charBuf); // the string to split
     int idx = 0;
@@ -342,21 +342,21 @@ int setConfig(String configInputString){
         values[idx++] = atoi(pt);
     }
     //End black magic.
-
+    
     flowmeterDelay =  values[0];
     flowrateMul = values[1];
     ppl = values[2];
     utcTimeZone = values[3];
     flowThreshPct = values[4];
     configString = String(flowmeterDelay)  + " " + String(flowrateMul) + " " + String(ppl)+ " " + String(utcTimeZone) + " " + String(flowThreshPct);
-
+    
     return 1;
 }
 
 
 
 int resetAlarmTime(String timeString) {
-
+    
     //convert timeString we got from the cloud into an array of usable values
     //Begin black magic supplied by @mdma at:
     // https://community.spark.io/t/gpio-control-via-gui/6310/7
@@ -364,7 +364,7 @@ int resetAlarmTime(String timeString) {
     timeString.toCharArray(charBuf, 20);
     const int value_count = 8; // the maximum number of values
     int values[value_count]; // store the values here
-
+    
     char string[20];
     strcpy(string, charBuf); // the string to split
     int idx = 0;
@@ -372,15 +372,15 @@ int resetAlarmTime(String timeString) {
         values[idx++] = atoi(pt);
     }
     //End black magic.
-
+    
     //assign values
     // first we get the index of w`hich orchard is getting set
     int index = values[0];
-
-
+    
+    
     // set the correct vars according to the index
     if (index == 0) {
-
+        
         Alarm.free(onAlarmT1);//free previous alarms
         Alarm.free(offAlarmT1);
         t1StartHour = values[1];
@@ -393,9 +393,9 @@ int resetAlarmTime(String timeString) {
         //set specific irrigation alarm according to systemID
         onAlarmT1 = Alarm.alarmOnce(t1StartHour, t1StartMin, 0, powerOn1);
         cycleTimeString1 = String(t1StartHour) + " " + String(t1StartMin) + " " + String(t1EndHour) + " " + String(t1EndMin) + " " + String(cycleDur1) +" "+ String(repeatDur1);
-
+        
     } else if (index == 1) {
-
+        
         Alarm.free(onAlarmT2);//free previous alarms
         Alarm.free(offAlarmT2);
         t2StartHour = values[1];
@@ -409,7 +409,7 @@ int resetAlarmTime(String timeString) {
         onAlarmT2 = Alarm.alarmOnce(t2StartHour, t2StartMin, 0, powerOn2);
         cycleTimeString2 = String(t2StartHour) + " " + String(t2StartMin) + " " + String(t2EndHour) + " " + String(t2EndMin)+ " " + String(cycleDur2) + " "+ String(repeatDur2);
     }else if (index == 2) {
-
+        
         Alarm.free(onAlarmT3);//free previous alarms
         Alarm.free(offAlarmT3);
         t3StartHour = values[1];
@@ -456,7 +456,7 @@ void manageTime() {
     adhocTimer1 = max(0, ((int)(adhocDur1 / 60000)) - ((int)(millis() - adhocTstamp1) / 60000));
     adhocTimer2 = max(0, ((int)(adhocDur2 / 60000)) - ((int)(millis() - adhocTstamp2) / 60000));
     adhocTimer3 = max(0, ((int)(adhocDur3 / 60000)) - ((int)(millis() - adhocTstamp3) / 60000));
-
+    
 }
 
 // once an hour we publish all our data to the cloud
@@ -469,29 +469,29 @@ void publishHourly() {
 
 
 void publishDaily() {
-
+    
     Particle.publish("dTemp", String(random(10) + 20), PRIVATE); //Temp
     Particle.publish("dHum", String(random(100)), PRIVATE); //Hum
-
-
+    
+    
     Particle.publish("dVol1", String(dvol1) + " " + String(dvol2), PRIVATE); //Volume / Cycle
     Particle.publish("dFlowRt1", String(dFlowRt1) + " " + String(dFlowRt2), PRIVATE); //Flow Rate
     Particle.publish("dFlowAnm1", String(dFlowAnm1) + " " + String(dFlowAnm2), PRIVATE); //Flow Anomaly
     Particle.publish("volData1", String(todayVol), PRIVATE); //volume data for today
     //  Particle.publish("volData1", String(todayVol) + " " + String(lastDayVol) + " " + String(secondDayVol) + " " + String(thirdDayVol), PRIVATE); //all the volume data
-
+    
     Particle.publish("dVol2", String(dvol2) + " " + String(dvol2), PRIVATE); //Volume / Cycle
     Particle.publish("dFlowRt2", String(dFlowRt2) + " " + String(dFlowRt2), PRIVATE); //Flow Rate
     Particle.publish("dFlowAnm2", String(dFlowAnm2) + " " + String(dFlowAnm2), PRIVATE); //Flow Anomaly
     Particle.publish("volData2", String(todayVol) + " " + String(lastDayVol) + " " + String(secondDayVol) + " " + String(thirdDayVol), PRIVATE); //all the volume data
-
+    
     Particle.publish("dVol3", String(dvol1) + " " + String(dvol2), PRIVATE); //Volume / Cycle
     Particle.publish("dFlowRt3", String(dFlowRt1) + " " + String(dFlowRt2), PRIVATE); //Flow Rate
     Particle.publish("dFlowAnm3", String(dFlowAnm1) + " " + String(dFlowAnm2), PRIVATE); //Flow Anomaly
     Particle.publish("volData3", String(todayVol) + " " + String(lastDayVol) + " " + String(secondDayVol) + " " + String(thirdDayVol), PRIVATE); //all the volume data
-
+    
     bPublishData = false;
-
+    
     /*Particle.publish("lastCycle",String(t1StartHour)+" "+String(t1StartMin)+" "+String(t1EndHour)+" "+String(t1EndMin),PRIVATE); //Volume*/
 }
 
@@ -508,8 +508,8 @@ void publishLastCycle2() {
 }
 
 void publishLastCycle3() {
-    String publishString = String(t3StartHour) + ":" + String(t3StartMin) + " "+ String(cycleDur3) + String(litersPerMinute3) + " " + String(dFlowAnm3) + " "+ String(volt) +" - " +(Time.timeStr());
-    Particle.publish("lastCycle3", publishString, PRIVATE); //publish last water cycle for orchard 3
+    String publishString = String(t2StartHour) + ":" + String(t2StartMin) + " "+ String(cycleDur2) + String(litersPerMinute2) + " " + String(dFlowAnm2) + " "+ String(volt) +" - " +(Time.timeStr());
+    Particle.publish("lastCycle2", publishString, PRIVATE); //publish last water cycle for orchard 2
 }
 
 
@@ -550,16 +550,16 @@ void dailyTasks() {
 }
 
 void dailySync() {
-
+    
     // Request time synchronization from the Particle Cloud
     Particle.syncTime();
     dailyTimer = millis();
-
+    
 }
 
 void powerOn1() {
     Serial.println("turn on! End time: "+String(t1EndHour)+":"+String(t1EndMin));
-
+    
     powerState1 = HIGH;
     digitalWrite(waterValve1, powerState1);
     offAlarmT1 = Alarm.alarmOnce(t1EndHour, t1EndMin, 0, powerOff1);
@@ -577,11 +577,11 @@ void powerOff1() {
     powerState1 = LOW; //turn it off
     digitalWrite(waterValve1, powerState1);
     // publish this last cycle to cloud, unless manuall shut off
-
+    
     if(manualOff1==false){
         publishLastCycle1();
     }
-
+    
     //if repeat frequency is set reset the alarm automatically, in increments of repeatDur
     if(repeatDur1>0 && manualOff1==false){
         t1StartHour = (t1StartHour+repeatDur1)%24;
@@ -597,7 +597,7 @@ void powerOff1() {
 void powerOff2() {
     powerState2 = LOW;
     digitalWrite(waterValve2, powerState2);
-
+    
     // publish this last cycle to cloud, unless manuall shut off
     if(manualOff2==false){
         publishLastCycle2();
@@ -616,7 +616,7 @@ void powerOff2() {
 void powerOff3() {
     powerState3 = LOW;
     digitalWrite(waterValve3, powerState3);
-
+    
     // publish this last cycle to cloud, unless manuall shut off
     if(manualOff3==false){
         publishLastCycle3();
@@ -640,7 +640,7 @@ void msISR() {
 }
 //flow sensor interrupt-timer calculation
 void senseISR() {
-
+    
     //******* FIX THIS -- litersPerMinute should be passed as arg~!!!! ********
     //******* FIX THIS -- litersPerMinute should be passed as arg~!!!! ********
     //******* FIX THIS -- litersPerMinute should be passed as arg~!!!! ********
@@ -662,3 +662,4 @@ float map(float x, float in_min, float in_max, float out_min, float out_max)
 {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
+
